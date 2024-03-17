@@ -39,3 +39,17 @@ plt.title('Markov Chain Trajectory')
 plt.grid(True)
 plt.legend()
 plt.show()
+
+def total_variation_distance(p, q):
+    return 0.5 * np.sum(np.abs(p - q))
+
+# Compute the mixing time
+mixing_time = 0
+for t in range(1, num_steps):
+    dist = simulate_markov_chain(transition_matrix, initial_state, t)[-1]
+    if total_variation_distance(dist, stationary_dist) < 0.01:
+        mixing_time = t
+        break
+
+print("Mixing Time:", mixing_time)
+
